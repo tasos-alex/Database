@@ -1,0 +1,75 @@
+create database GAME_PLATFORM;
+use GAME_PLATFORM;
+
+create table DEVELOPER
+(Tax_number int not null,
+ Legal_name varchar(50),
+ Contact_number varchar(50),
+ City varchar(50),
+ Street varchar(50),
+ Number int,
+ Postal_code int,
+ Card_number varchar(16),
+ Expire_date date,
+ CVV int,
+ primary key (Tax_number)
+);
+
+create table DISCUSSION
+(Disc_id int,
+ Topic varchar(50),
+ Publish_date date,
+ Disc_starter varchar(50),
+ Game_about varchar(50),
+ primary key (Disc_id),
+ foreign key (Disc_starter) references USER(Username),
+ foreign key (Game_about) references GAME(Game_id)
+);
+
+create table COMMENT
+(Comment_id int not null,
+ Text_comment clob,
+ Day day,
+ Month month,
+ Year year,
+ Hour time,
+ Commenter varchar(50),
+ Disc_about int,
+ primary key (Comment_id),
+ foreign key (Commenter) references USER(Username),
+ foreign key (Disc_about) references DISCUSSION(Disc_id)
+);
+
+create table DOWNLOAD
+(Downloader varchar(50),
+ Game_downloaded varchar(50), //SOS variable type
+ foreign key (Downloader) references USER(Username),
+ foreign key (Game_downloaded) references GAME(Game_id),
+ primary key (Downloader, Game_downloaded)
+);
+
+create table REVIEW
+(Reviewer varchar(50), 
+ Game_reviewed varchar(50),
+ Text_review clob,
+ Rating float,
+ foreign key (Reviewer) references USER(Username),
+ foreign key (Game_reviewd) references GAME(Game_id),
+ primary key (Reviewer, Game_reviewed)
+);
+
+create table PHOTOS
+(Game_about varchar(50),
+ Photo blob????,
+ foreign key(Game_about) references GAME(Game_id),
+ primary key (Game_about, Photo???)
+);
+
+create table VIDEO
+(Game_about varchar(50),
+ Video ???,
+ foreign key (Game_about) references GAME(Game_id)
+ primary key (Game_about, Video????)
+);
+
+
