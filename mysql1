@@ -2,74 +2,226 @@ create database GAME_PLATFORM;
 use GAME_PLATFORM;
 
 create table DEVELOPER
-(Tax_number int not null,
- Legal_name varchar(50),
- Contact_number varchar(50),
- City varchar(50),
- Street varchar(50),
- Number int,
- Postal_code int,
- Card_number varchar(16),
- Expire_date date,
- CVV int,
+(Tax_number varchar(15) not null,
+ Legal_name varchar(25) not null,
+ Contact_number varchar(15) not null,
+ City varchar(25) not null,
+ Street varchar(25) not null,
+ Number varchar(10) not null,
+ Postal_code varchar(16) not null,
+ Card_number varchar(16) not null,
+ Expire_date date not null,
+ CVV varchar(3) not null,
  primary key (Tax_number)
 );
 
 create table DISCUSSION
-(Disc_id int,
- Topic varchar(50),
+(Disc_id varchar(10),
+ Topic varchar(25),
  Publish_date date,
- Disc_starter varchar(50),
- Game_about varchar(50),
+ Disc_starter varchar(25) not null,
+ Game_about varchar(10) not null,
  primary key (Disc_id),
  foreign key (Disc_starter) references USER(Username),
  foreign key (Game_about) references GAME(Game_id)
 );
 
 create table COMMENT
-(Comment_id int not null,
- Text_comment clob,
- Day day,
- Month month,
- Year year,
- Hour time,
- Commenter varchar(50),
- Disc_about int,
+(Comment_id varchar(10) not null,
+ Text_comment varchar(25),
+ Datetime datetime,
+ Commenter varchar(25),
+ Disc_about varchar(10),
  primary key (Comment_id),
  foreign key (Commenter) references USER(Username),
  foreign key (Disc_about) references DISCUSSION(Disc_id)
 );
 
 create table DOWNLOAD
-(Downloader varchar(50),
- Game_downloaded varchar(50), //SOS variable type
+(Downloader varchar(25) not null,
+ Game_downloaded varchar(10) not null, //SOS variable type
  foreign key (Downloader) references USER(Username),
  foreign key (Game_downloaded) references GAME(Game_id),
  primary key (Downloader, Game_downloaded)
 );
 
 create table REVIEW
-(Reviewer varchar(50), 
- Game_reviewed varchar(50),
- Text_review clob,
- Rating float,
+(Reviewer varchar(25) not null, 
+ Game_reviewed varchar(10) not null,
+ Text_review varchar(25),
+ Rating float(2,1),
  foreign key (Reviewer) references USER(Username),
- foreign key (Game_reviewd) references GAME(Game_id),
+ foreign key (Game_reviewed) references GAME(Game_id),
  primary key (Reviewer, Game_reviewed)
 );
 
 create table PHOTOS
-(Game_about varchar(50),
- Photo blob????,
+(Game_about varchar(10) not null,
+ Photo varchar(10) not null,
  foreign key(Game_about) references GAME(Game_id),
- primary key (Game_about, Photo???)
+ primary key (Game_about, Photo)
 );
 
 create table VIDEO
-(Game_about varchar(50),
- Video ???,
- foreign key (Game_about) references GAME(Game_id)
- primary key (Game_about, Video????)
+(Game_about varchar(10) not null,
+ Video varchar(10) not null,
+ foreign key (Game_about) references GAME(Game_id),
+ primary key (Game_about, Video)
 );
 
 
+
+CREATE TABLE GAME(Game_id VARCHAR(10) NOT NULL,Title VARCHAR(25) NOT NULL,Price FLOAT(5,2),Size VARCHAR(5),Version VARCHAR(10), Compatibility VARCHAR(25),
+ Type VARCHAR(25), Age_res INT(2), Desc_text VARCHAR(25), Game_file BLOB, Dev VARCHAR(15) NOT NULL,PRIMARY KEY(Game_id));
+ 
+CREATE TABLE USER(Username VARCHAR(25) NOT NULL,Password VARCHAR(25) NOT NULL,
+ Age INT(2),Sex CHAR,Email VARCHAR(25) NOT NULL,Carc_num CHAR(19), Exp_date DATE,
+ CVV CHAR(3), PRIMARY KEY(Username));
+
+
+
+
+ INSERT INTO USER (Username, Password, Age, Sex, Email, Card_num, Exp_date , CVV)
+ VALUES ('NoobSlave2006', '12345', 13, 'M', 'noobslave@hotmail.com', null, null, null);
+ INSERT INTO USER (Username, Password, Age, Sex, Email, Card_num, Exp_date , CVV)
+ VALUES ('camperomenos', 'qwer123', 25, 'M', 'nikos@gmail.com', null, null, null);
+ INSERT INTO USER (Username, Password, Age, Sex, Email, Card_num, Exp_date , CVV)
+ VALUES ('Xristina_lol', 'imqueen', 16, 'F', 'preetygal@hotmail.com', null, null, null);
+ INSERT INTO USER (Username, Password, Age, Sex, Email, Card_num, Exp_date , CVV)
+ VALUES ('imsohigh', 'tithesre', 25, 'M', 'bestplayer@gmail.com', '1223432109877643', '23-03-01', 766);
+ INSERT INTO USER (Username, Password, Age, Sex, Email, Card_num, Exp_date , CVV)
+ VALUES ('Helloworld', '1212121', 31, 'M', 'mrobv@yahoo.com', null, null, null);
+ 
+ /*
+ INSERT INTO GAME VALUES 
+('H32HJ2', 'AGE OF EMPIRE', NULL, '5MB', '1.9', 'WIN10', 'STRATEGY', 9, 'BEST GAME EVER' , NULL, '333');  INSERT INTO GAME VALUES 
+('H32H12', 'FORTNITE', NULL, '1GB', '1.9.2.2', 'WIN10,ANDROID', 'KIDSGAME', 9, 'FIRST PERSON SHOOTER' , NULL, '000');  INSERT INTO GAME VALUES 
+('H24124', 'MARIOBROS', NULL, '100MB', '4.3.2', 'ANDROID 8.8', 'ARCADE', 7, 'THE CLASSIC GAME' , NULL, '111');  INSERT INTO GAME VALUES 
+('H32FS1', 'SIMS 5', NULL, '0.5GB', '1.2.2.5', 'LINUX ONLY', 'LIFE SIMULATOR', 15, 'MEET VIRTUAL LIFE' , NULL, '444');  INSERT INTO GAME VALUES 
+('H32214', 'LINEAGE', NULL, '600MB', '1.2.5', 'WINDOWS 10', 'MMORPG', 13, 'LIKE WOW' , NULL, '555');  INSERT INTO GAME VALUES 
+('99DFS2', 'DORA THE EXPLORER', 999.99 ,'1KB', '4.9.1.3', 'MAC OS', 'ADULTS', 18, 'XXX CONTENT OF DORA' , NULL, '222'); 
+*/
+
+ INSERT INTO GAME VALUES 
+('AGEOF', 'AGE OF EMPIRE', NULL, '5MB', '1.9', 'WIN10', 'STRATEGY', 9, 'BEST GAME EVER' , NULL, '333');  
+INSERT INTO GAME VALUES 
+('FORTNITE', 'FORTNITE', NULL, '1GB', '1.9.2.2', 'WIN10,ANDROID', 'KIDSGAME', 9, 'FIRST PERSON SHOOTER' , NULL, '000');  
+INSERT INTO GAME VALUES 
+('MARIOBR', 'MARIOBROS', NULL, '100MB', '4.3.2', 'ANDROID 8.8', 'ARCADE', 7, 'THE CLASSIC GAME' , NULL, '111');  
+INSERT INTO GAME VALUES 
+('SIMS5', 'SIMS 5', NULL, '0.5GB', '1.2.2.5', 'LINUX ONLY', 'LIFE SIMULATOR', 15, 'MEET VIRTUAL LIFE' , NULL, '444');  
+INSERT INTO GAME VALUES 
+('LINEAGE', 'LINEAGE', NULL, '600MB', '1.2.5', 'WINDOWS 10', 'MMORPG', 13, 'LIKE WOW' , NULL, '555');  
+INSERT INTO GAME VALUES 
+('DORAXXX', 'DORA THE EXPLORER', 999.99 ,'1KB', '4.9.1.3', 'MAC OS', 'ADULTS', 18, 'XXX CONTENT OF DORA' , NULL, '222'); 
+
+
+
+INSERT INTO DEVELOPER VALUES
+('000' , 'MICROSOFT INC','6900000000', 'XANTHI', 'TSIMISKI', '4', '67131', '0987345609216756', '20-01-01', '000');
+INSERT INTO DEVELOPER VALUES
+('111' , 'NINTENDO INC','69111111111', 'NEW YORK', 'WALL STREET', '18', '50011', '0987387659216756', '26-01-01', '111');
+INSERT INTO DEVELOPER VALUES
+('222' , 'ROCKSTAR GAMES','6922222222', 'XANTHI', 'ELIPIDOS', '6', '18222', '0987345609216756', '19-12-06', '000');
+INSERT INTO DEVELOPER VALUES
+('333' , 'UBISOFT CORP','6933333333', 'BERLIN', 'ALEXANDER STREET', '90', '90333', '1098734531116756', '21-01-01', '000');
+INSERT INTO DEVELOPER VALUES
+('444' , 'EA GAMES INC','6944444444', 'JAKARTA', 'UBUNDOU', '12', '67444', '0987777609216756', '22-01-01', '000');
+INSERT INTO DEVELOPER VALUES
+('555' , 'INSOMNIAC CORP','6955555555', 'MISURI', 'WESTSIDE', '90', '67555', '0232345609216756', '25-01-01', '000');
+
+
+insert into COMMENT VALUES
+('000', 'THIS WAS VERY HELPUL', '2019-12-03 23:02:59', 'NoobSlave2006', '000');
+insert into COMMENT VALUES
+('111', 'EASY PEAZY LEMON SQUEAZY', '2019-12-03 22:02:59', 'imsohigh', '000');
+insert into COMMENT VALUES
+('222', 'CANCER TO YOUR MOM', '2019-12-03 19:02:59', 'Xristina_lol', '999');
+insert into COMMENT VALUES
+('333', 'GOOD LUCK HAVE FUN', '2019-12-05 00:02:59', 'Helloworld', '000');
+insert into COMMENT VALUES
+('444', 'GG M8', '2019-12-05 03:02:59', 'camperomenos', '111');
+ insert into COMMENT VALUES
+('555', 'my best friend for tnt', '2019-12-03 05:02:59', 'camperomenos', '666'); 
+
+
+
+
+insert into DISCUSSION VALUES
+('000', 'how to install the game', '2019-12-03', 'Helloworld', 'SIMS5' );
+insert into DISCUSSION VALUES
+('111', 'How ill beat you all', '2019-12-04', 'camperomenos', 'LINEAGE' );
+insert into DISCUSSION VALUES
+('999', 'report Xristina_lol', '2019-12-03', 'NoobSlave2006', 'FORTNITE' );
+insert into DISCUSSION VALUES
+('666', 'did you see this game?', '2019-12-02', 'imsohigh', 'DORAXXX' );
+
+
+insert into DOWNLOAD VALUES
+('imsohigh','DORAXXX');
+insert into DOWNLOAD VALUES
+('NoobSlave2006','FORTNITE');
+insert into DOWNLOAD VALUES
+('camperomenos','DORAXXX');
+insert into DOWNLOAD VALUES
+('Xristina_lol','AGEOF');
+insert into DOWNLOAD VALUES
+('Xristina_lol','SIMS5');
+insert into DOWNLOAD VALUES
+('camperomenos','LINEAGE');
+insert into DOWNLOAD VALUES
+('Helloworld','FORTNITE');
+insert into DOWNLOAD VALUES
+('Helloworld','AGEOF');
+insert into DOWNLOAD VALUES
+('imsohigh','SIMS5');
+insert into DOWNLOAD VALUES
+('NoobSlave2006','AGEOF');
+insert into DOWNLOAD VALUES
+('Xristina_lol','DORAXXX');
+
+
+INSERT INTO REVIEW VALUES
+('imsohigh', 'DORAXXX', 'lit', '5');
+INSERT INTO REVIEW VALUES
+('Xristina_lol', 'DORAXXX', 'EW I GAVE MY 999 FOR THIS', '0');
+INSERT INTO REVIEW VALUES
+('NoobSlave2006', 'FORTNITE', 'nIcE GrApHyiCs!1', '4.5');
+INSERT INTO REVIEW VALUES
+('Helloworld', 'FORTNITE', 'need some improvements', '3');
+
+
+INSERT INTO REVIEW VALUES
+('Xristina_lol', 'AGEOF', 'lame af', '2');
+INSERT INTO REVIEW VALUES
+('Helloworld', 'AGEOF', 'Enjoyed it', '4');
+INSERT INTO REVIEW VALUES
+('NoobSlave2006', 'AGEOF', 'fortnite is better', '3.5');
+INSERT INTO REVIEW VALUES
+('Xristina_lol', 'SIMS5', 'i love it', '5');
+
+
+insert into VIDEO VALUES
+('DORAXXX', 'SNEAK.MP4' );insert into VIDEO VALUES
+('SIMS5', 'VIDEO1.mp4' );
+
+
+insert into PHOTOS VALUES
+('DORAXXX', 'TITIES.PNG' );insert into PHOTOS VALUES
+('DORAXXX', 'XXX.PNG' );insert into PHOTOS VALUES
+('SIMS5', 'PHOTO1.PNG' );
+
+
+/*  how many games a player has downloaded
+	SE POIA PAIXNIDIA EXEI KANEI SXOLIA O KATHE XRISTIS
+	
+	# ti sxoliase kai sxetika me poio paixnidi o kathe xristis me where
+	 SELECT C.Commenter,C.Text_comment , D.Game_about FROM COMMENT C,DISCUSSION D WHERE D.Disc_id = C.Disc_about;
+
+	me join //erwtima 3
+	SELECT C.Commenter,C.Text_comment , D.Game_about FROM COMMENT C INNER JOIN DISCUSSION D ON D.Disc_id = C.Disc_about;
+	
+	 select u.Username , d.Legal_name FROM USER u INNER JOIN DOWNLOAD down INNER JOIN GAME g INNER JOIN DEVELOPER d on d.Tax_number=g.Dev and g.Game_id=down.Game_downloaded and down.Downloader=u.Username;
+
+
+	
