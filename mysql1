@@ -223,5 +223,5 @@ insert into PHOTOS VALUES
 	
 	 select u.Username , d.Legal_name FROM USER u INNER JOIN DOWNLOAD down INNER JOIN GAME g INNER JOIN DEVELOPER d on d.Tax_number=g.Dev and g.Game_id=down.Game_downloaded and down.Downloader=u.Username;
 
-
+test
 	
